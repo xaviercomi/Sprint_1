@@ -1,6 +1,6 @@
 let contador = 0;
-let respuesta;
 let interval;
+let entrada;
 
 interval = setInterval(missatgeDemora, 1000);
 
@@ -15,11 +15,14 @@ function missatgeDemora() {
 }
 
 function stopInterval(){
-    process.stdout.write('¿Quieres continuar? (s/n): \n');    
-    process.stdin.on('data', function(data) { 
-        respuesta = data.toString().trim()
-        if ( respuesta == 's')  {
-            process.exit();
-        }  
-    });
+    clearInterval(interval);
+    process.stdout.write('¿Quieres continuar? (s/n): ');
+    process.stdin.on('data', data => { 
+        entrada = data.toString().trim();
+        if ( entrada == 'n')  {
+             process.exit();
+        } else if (entrada == 's')
+            setInterval(missatgeDemora)
+        }
+    });       
 }
