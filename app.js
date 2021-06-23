@@ -1,16 +1,37 @@
-let age = prompt('What is your age?', 18);
+// El bucle for in
 
-let welcome;
+let user = {
+    name: 'John',
+    age: 30,
+    isAdmin: true,
+};
 
-if (age < 18) {
-    welcome = function() {
-        alert('Hello!');
-    };
-
-} else {
-    welcome = function() {
-        alert('Greetings!');
-    };
+for (let key in user) {
+    alert( key + ' : ' + user[key] )
 }
 
-    welcome();
+let codes = {
+    '+49': 'Germany',
+    '+41': 'Switzerland',
+    '+44': 'Great Britain',
+    '+1': 'USA',
+};
+
+for (let code in codes){
+    alert( code );
+    alert( codes[code] );
+}
+
+// Combinar dos objetos
+
+let coche = {color: 'rojo', puertas: 4, gasolina: true};
+
+let todoTerreno = {cilindros: 8};
+let familiar = {airbags: true};
+
+Object.assign(coche, todoTerreno, familiar);
+
+for(let key in coche) {
+    alert( key );
+    alert( coche[key] );
+}
