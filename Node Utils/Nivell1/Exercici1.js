@@ -1,7 +1,6 @@
 let contador = 0;
 let respuesta;
-
-setInterval(missatgeDemora, 1000);
+let interval;
 
 function missatgeDemora() {
 
@@ -9,13 +8,22 @@ function missatgeDemora() {
     contador++;
 
     if (contador % 10 == 0) {
+        stopInterval();
 
+        
         process.stdout.write('¿Quieres continuar? (s/n): \n');
+
         process.stdin.on('data', function(data) { 
             respuesta = data.toString().trim()
             if ( respuesta == 's')  {
                 process.exit();
             }  
-            });
+        });
     }        
+}
+
+interval = setInterval(missatgeDemora, 1000);
+
+function stopInterval(){
+    clearInterval(interval);
 }
