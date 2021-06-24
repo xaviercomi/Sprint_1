@@ -1,12 +1,12 @@
+
+let interval  = setInterval(missatgeDemora, 1000);
 let contador = 0;
-let interval;
 let entrada;
 
-interval = setInterval(missatgeDemora, 1000);
 
 function missatgeDemora() {
 
-    console.log(`${contador} Hola!`)
+    console.log(`${contador} !Hola!`)
     contador++;
 
     if (contador % 10 == 0) {
@@ -19,10 +19,11 @@ function stopInterval(){
     process.stdout.write('¿Quieres continuar? (s/n): ');
     process.stdin.on('data', data => { 
         entrada = data.toString().trim();
-        if ( entrada == 'n')  {
-             process.exit();
-        } else if (entrada == 's')
-            setInterval(missatgeDemora)
-        }
-    });       
+        if ( entrada == 's')  {
+            clearInterval(interval);
+            interval = setInterval(missatgeDemora, 1000);
+        } else {
+              process.exit();  
+        }                
+    });          
 }
