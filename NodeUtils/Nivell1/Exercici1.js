@@ -1,8 +1,8 @@
+// ATENCIO - Cal executar al terminal.
 
-let interval  = setInterval(missatgeDemora, 1000);
+let interval = setInterval(missatgeDemora, 1000);
 let contador = 0;
 let entrada;
-
 
 function missatgeDemora() {
 
