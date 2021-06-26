@@ -1,8 +1,8 @@
 
 
-function Pelota (nomInstancia, grupo, definicio) {
-    this.nomInstancia = nomInstancia;
-    this.definicio = definicio;
-    this.grupo = grupo;
+function movil (marca, pantalla, color) {
+    this.marca = marca;
+    this.pantalla = pantalla;
+    this.color = color;
     nomInstancia = new Animal(grupo, definicio);
 }
