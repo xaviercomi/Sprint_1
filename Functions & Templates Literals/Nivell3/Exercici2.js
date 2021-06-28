@@ -1,5 +1,3 @@
-let funcioAnonima = (function(nomUsuari){
-    console.log(nomUsuari);
-});
+let funcioAnonima = (nomUsuari) => console.log(nomUsuari);
 
 funcioAnonima('Xavier Comí');
