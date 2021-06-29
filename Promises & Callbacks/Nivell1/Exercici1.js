@@ -1,42 +1,31 @@
-const peliculas = [{
-    id: 1,
-    title: 'Iron man',
-    year: 2008
-},{
-    id: 2,
-    title: 'Spiderman : Homecoming',
-    year: 2017
-},{
-    id: 3,
-    title: 'Iron man',
-    year: 2019
-}];
+//Callbacks
+let salutacio = nom => console.log(`Hola! ${nom}`);
 
-//const peliculas = []; // para forzar el error.
+function userInfo(nom, cognom, callback) {
+    const nomComplert = (`${nom} ${cognom}`);
+    callback(nomComplert);
+}
 
-const getPeliculas = () => {
-    return new Promise((resolve, reject) => {
-        if (peliculas.length === 0) {
-            reject (new Error('No hay peliculas resgistradas'));
+userInfo('Xavier','Comi',salutacio);
+
+//Promises
+
+function promesas(x,  y) {
+    const promise = new Promise((resolve, reject) => {
+        let sum = (x + y);
+        if( sum == 2) {
+            resolve('Success')
+        } else {
+            reject('Failed')
         }
-        setTimeout(() => {
-            resolve(peliculas);
-        }, 5000);
-    });
-};
+    })
 
-getPeliculas()
-    .then( (pelis) => console.log(pelis)); //  
-    //.then() puedes encadenar todas las promises necesarias.
-    //.catch() en caso de tener un error.
+    promise
+    .then((message) => {console.log(message)})
+    .catch((error) => {console.log(error)}); 
+}    
 
- /* async function fechingData() { // en lugar del then.
-    try {
-    const pelis = await getPeliculas();
-    console.log(pelis);
-    } catch (err) {
-        console.log(err.message);
-    }
- }
+promesas(0,0);
+promesas(1,1);
 
- fechingData(); */
+
