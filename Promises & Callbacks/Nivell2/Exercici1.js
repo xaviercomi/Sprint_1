@@ -20,6 +20,22 @@ let salaries = [{
     salary: 2000
 }];
 
-const getEmpleado = () => {
-    
-}
+const getEmpleado = (id) => {
+    let usuariTrobat = employees.find(item => item.id == id);
+    return new Promise((resolve, reject) => {
+        if (usuariTrobat) {
+            resolve(usuariTrobat);
+        } else {
+            reject(new Error(`Id:${id} no existe.`));
+        }
+    });
+}      
+getEmpleado(0)
+    .then((usuariTrobat) => {
+        console.log(`Aquesta identificació pertany a: ${usuariTrobat.name}`);
+    })
+    .catch((err) => {
+        console.log(err.message);
+    });
+
+ 
