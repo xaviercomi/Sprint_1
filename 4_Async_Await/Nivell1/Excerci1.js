@@ -24,17 +24,17 @@ const getEmpleado = (id) => {
     let usuari = employees.find(item => item.id == id);
     return new Promise ((resolve, reject) => {
             if (usuari) {
-                resolve(console.log(`Usuari: ${usuari.name} id: ${usuari.id}`,
-                        console.log(getSalario(usuari));
+                resolve(console.log(`Usuari: ${usuari.name} id: ${usuari.id}`));
             } else {
                 reject('Usuari no trobat');
             }
-    })
+    });
 }
 
-const getSalario = (usuari) => {
-        let salari = salaries.find(item => item.id == usuari.id);
+const getSalario = (id) => {
+        let salari = salaries.find(item => item.id == id);
         console.log(`Salari: ${salari.salary}`)
 }
 
-getEmpleado(3);
+getEmpleado(2);
+getSalario(2);
