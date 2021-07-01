@@ -31,10 +31,10 @@ const getEmpleado = (id) => {
     });
 }
 
-const getSalario = (id) => {
-        let salari = salaries.find(item => item.id == id);
-        console.log(`Salari: ${salari.salary}`)
+const getSalario = (employee) => {
+    salari = salaries.find(item => item.id == employee.id)
+    console.log(`Salari: ${salari.salary}`);
 }
+getEmpleado(1);
 
-getEmpleado(2);
-getSalario(2);
+getSalario(employees[0]);
