@@ -9,9 +9,3 @@ console.log(write);
 }
 
 ZipFile();
-
-list ('ls /', (err, stdout, stderr) => {
-
-}
-
-}
