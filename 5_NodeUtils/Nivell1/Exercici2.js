@@ -1,7 +1,8 @@
 function creaArxiu () {
+    
 const fs = require('fs');
 
-fs.appendFile('document.txt','Text de prova Sprint1', (error) => {
+fs.appendFile('creaArxiu.txt','El nom de la funció és creaArxiu', (error) => {
 
     if(error) {
         throw error;
