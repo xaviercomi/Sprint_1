@@ -1,5 +1,3 @@
-
-
 function getName(nom) {
     return new Promise((resolve, reject) => {
         if(nom != 'Xavier') {
