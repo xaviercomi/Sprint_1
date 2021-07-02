@@ -1,3 +1,5 @@
+const path = require('path/posix');
+
 function creaArxiu () {
     
 const fs = require('fs');
