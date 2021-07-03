@@ -1,11 +1,29 @@
 const fs = require('fs');
 const zlib = require('zlib');
-const list = require('child_process');
+const { exec } = require('child_process');
+
 
 const ZipFile = () => {
-const arxiuZip = zlib.createGzip();
-const write = fs.createWriteStream('/Users/Comi/Documents/CODE/Sprint_1/creaArxiu.txt.gz')
-console.log(write);
+    let arxiuZip = zlib.createGzip(),
+        read = fs.createReadStream('creaArxiu.txt'),
+        write = fs.createWriteStream('creaArxiu.txt' + '.gz');
+
+    read.pipe(arxiuZip).pipe(write);
 }
 
 ZipFile();
+
+exec ("tree /f", (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+});
+
+
+
