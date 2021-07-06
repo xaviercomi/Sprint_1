@@ -1,4 +1,4 @@
-import { realpath, readFile, appendFile} from 'fs';
+import { realpath, readFile, appendFile, unlink} from 'fs';
 import crypto from 'crypto';
 
 const key = crypto.randomBytes(24);
@@ -7,9 +7,10 @@ const iv = crypto.randomBytes(16);
 const algorithm = 'aes-192-cbc';
            
 
-/* function codificadorBaseHexa() {
 
-    realpath('creaArxiu.txt', (error, resolvedPath) => {
+function codificadorBaseHexa(nomArxiu) {
+
+    realpath(nomArxiu, (error, resolvedPath) => {
         if (error) {
             throw error;
         } else {
@@ -25,7 +26,7 @@ const algorithm = 'aes-192-cbc';
             let b64Encoded = Buffer.from(content).toString('base64');
             console.log(b64Encoded); 
 
-            appendFile('creaArxiuCodificat.b64',b64Encoded, error => {
+            appendFile(`Codificat_${nomArxiu}.b64`, b64Encoded, error => {
                 if (error) {
                     throw error;
                 } else {
@@ -36,7 +37,7 @@ const algorithm = 'aes-192-cbc';
             let hexEncoded = Buffer.from(content).toString('hex');
             console.log(hexEncoded); 
     
-            appendFile('creaArxiuCodificat.hex',hexEncoded, error => {
+            appendFile(`Codificat_${nomArxiu}.hex`, hexEncoded, error => {
                 if (error) {
                     throw error;
                 } else {
@@ -49,11 +50,13 @@ const algorithm = 'aes-192-cbc';
     
 }
 
-codificadorBaseHexa(); */
+codificadorBaseHexa('creaArxiu.txt'); 
 
-function encripta22(nomArxiu) {
 
-    realpath(nomArxiu, (error, resolvedPath) => {
+
+function encripta22(nomArxiuCodificat) {
+
+    realpath(nomArxiuCodificat, (error, resolvedPath) => {
         if (error) {
             throw error;
         } else {
@@ -70,18 +73,62 @@ function encripta22(nomArxiu) {
             let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
             let textEncriptat = encriptador.update(content);
 
-            appendFile('arxiuEncriptat.txt', textEncriptat, (error) => {
+            appendFile(`Encriptat_${nomArxiuCodificat}`, textEncriptat, (error) => {
                 if(error) {
                     throw error;
                 } else {
                     console.log('Arxiu encriptat creat!');
                 }
 
-                deleteFile()
+                unlink(nomArxiuCodificat, error => {
+                    if (error) {
+                        console.log('Arxiu NO eliminat!', error.misssage);
+                        
+                    } else {
+                        console.log('arxiu eliminat');
+                    }
+                });            
             });                               
         });
     });    
 };
 
-encripta22('creaArxiuCodificat.b64');
-encripta22('creaArxiuCodificat.hex')
+setTimeout( () => {
+    encripta22('Codificat_creaArxiu.txt.b64'), 
+    encripta22('Codificat_creaArxiu.txt.hex')}, 5000);
+
+
+
+
+// function desEncriptador22(nomArxiuEncriptat) {
+
+//     realpath(nomArxiuEncriptat, (error, resolvedPath) => {
+//         if (error) {
+//             throw error;
+//         } else {
+//             console.log(resolvedPath);
+//         }
+        
+//         readFile(resolvedPath, 'utf-8', (error, content) => {
+//             if (error) {
+//                 throw error;
+//             } else {
+//                 console.log(content);
+//             }  
+            
+//             let desEncriptador = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
+//             let textDesEncriptat = desEncriptador.update(content);
+
+//             appendFile(`des${nomArxiuEncriptat}`, textDesEncriptat, (error) => {
+//                 if(error) {
+//                     throw error;
+//                 } else {
+//                     console.log('Arxiu desencriptat creat!');
+//                 }           
+//             });                               
+//         });
+//     });    
+// }
+
+// desEncriptador22('Encriptat_Codificat_creaArxiu.txt.b64');
+// desEncriptador22('Encriptat_Codificat_creaArxiu.txt.hex');
