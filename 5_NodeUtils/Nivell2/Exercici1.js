@@ -25,6 +25,5 @@ exec ("tree", (error, stdout, stderr) => {
     console.log(`stdout: ${stdout}`);
 });
 
-exec;
 
 
