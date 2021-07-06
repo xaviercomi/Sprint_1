@@ -13,7 +13,7 @@ const ZipFile = () => {
 
 ZipFile();
 
-exec ("tree /f", (error, stdout, stderr) => {
+exec ("tree", (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
         return;
@@ -25,5 +25,6 @@ exec ("tree /f", (error, stdout, stderr) => {
     console.log(`stdout: ${stdout}`);
 });
 
+exec;
 
 
