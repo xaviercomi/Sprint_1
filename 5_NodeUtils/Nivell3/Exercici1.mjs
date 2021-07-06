@@ -15,7 +15,7 @@ function codificadorBaseHexa(nomArxiu) {
         if (error) {
             throw error;
         } else {
-            console.log(resolvedPath);
+            console.log(resolvedPath + '\n');
         }
         readFile(resolvedPath, 'utf-8', (error, content) => {
             if (error) {
@@ -25,7 +25,7 @@ function codificadorBaseHexa(nomArxiu) {
             }
 
             let b64Encoded = Buffer.from(content).toString('base64');
-            console.log(b64Encoded); 
+            console.log(b64Encoded + '\n'); 
 
             appendFile(`Codificat_${nomArxiu}.b64`, b64Encoded, error => {
                 if (error) {
@@ -36,7 +36,7 @@ function codificadorBaseHexa(nomArxiu) {
             });
 
             let hexEncoded = Buffer.from(content).toString('hex');
-            console.log(hexEncoded); 
+            console.log(hexEncoded + '\n'); 
     
             appendFile(`Codificat_${nomArxiu}.hex`, hexEncoded, error => {
                 if (error) {
@@ -61,7 +61,7 @@ function encripta22(nomArxiuCodificat) {
         if (error) {
             throw error;
         } else {
-            console.log(resolvedPath);
+            console.log(resolvedPath + '\n');
         }
         
         readFile(resolvedPath, 'utf-8', (error, content) => {
@@ -104,7 +104,7 @@ function desEncriptador22(nomArxiuEncriptatCodificat) {
         if (error) {
             throw error;
         } else {
-            console.log(resolvedPath);
+            console.log(resolvedPath + '\n');
         }
         
         readFile(resolvedPath, 'utf-8', (error, content) => {
@@ -137,7 +137,7 @@ function decodificadorBase (nomArxiuDesencriptatCodificatB64) {
         if (error) {
             throw error;
         } else {
-            console.log(resolvedPath);
+            console.log(resolvedPath + '\n');
         }
         readFile(resolvedPath, 'utf-8', (error, content) => {
             if (error) {
@@ -146,8 +146,8 @@ function decodificadorBase (nomArxiuDesencriptatCodificatB64) {
                 console.log(content + ' \n');
             }
 
-            let b64Decoded = Buffer.from(content, 'base64').toString('ascii');
-            console.log(b64Decoded); 
+            let b64Decoded = Buffer(content, 'base64').toString('ascii');
+            console.log(b64Decoded + '\n'); 
 
             appendFile(`deCodificat_${nomArxiuDesencriptatCodificatB64}`, b64Decoded, error => {
                 if (error) {
@@ -170,7 +170,7 @@ function decodificadorHexa (nomArxiuDesencriptatCodificatHex) {
         if (error) {
             throw error;
         } else {
-            console.log(resolvedPath);
+            console.log(resolvedPath + '\n');
         }
         readFile(resolvedPath, 'utf-8', (error, content) => {
             if (error) {
@@ -179,9 +179,9 @@ function decodificadorHexa (nomArxiuDesencriptatCodificatHex) {
                 console.log(content + '\n');
             }
 
-            let hexDecoded = Buffer.from(content, 'hex').toString('ascii');
-            console.log(hexDecoded); 
-    
+            let hexDecoded = Buffer(content, 'hex').toString('ascii');
+            console.log(hexDecoded + '\n'); 
+
             appendFile(`deCodificat_${nomArxiuDesencriptatCodificatHex}`, hexDecoded, error => {
                 if (error) {
                     throw error;
