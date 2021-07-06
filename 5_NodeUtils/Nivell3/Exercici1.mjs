@@ -1,4 +1,11 @@
 import { realpath, readFile, appendFile} from 'fs';
+import crypto from 'crypto';
+
+const key = crypto.randomBytes(24);
+const iv = crypto.randomBytes(16);
+
+const algorithm = 'aes-192-cbc';
+           
 
 /* function codificadorBaseHexa() {
 
@@ -54,30 +61,27 @@ function encripta22(nomArxiu) {
         }
         
         readFile(resolvedPath, 'utf-8', (error, content) => {
-                if (error) {
+            if (error) {
+                throw error;
+            } else {
+                console.log(content);
+            }  
+            
+            let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+            let textEncriptat = encriptador.update(content);
+
+            appendFile('arxiuEncriptat.txt', textEncriptat, (error) => {
+                if(error) {
                     throw error;
                 } else {
-                    console.log(content);
+                    console.log('Arxiu encriptat creat!');
                 }
-                
-                const crypto = require('crypto');
-                const algorithm = 'aes-192-cbc';
-                const key = crypto.randomBytes(24);
-                const iv = crypto.randomBytes(16);
 
-                let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-                let textEncriptat = encriptador.update(content);
-
-                appendFile('arxiuEncriptat.txt', textEncriptat, (error) => {
-
-                    if(error) {
-                        throw error;
-                    } else {
-                        console.log('Arxiu encriptat creat!');
-                    }
-                });                           
+                deleteFile()
+            });                               
         });
     });    
 };
 
 encripta22('creaArxiuCodificat.b64');
+encripta22('creaArxiuCodificat.hex')
