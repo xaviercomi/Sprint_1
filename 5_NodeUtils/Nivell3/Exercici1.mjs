@@ -1,4 +1,4 @@
-import { realpath, readFile, appendFile, unlink} from 'fs';
+import { realpath, readFile, appendFile, unlink } from 'fs';
 import crypto from 'crypto';
 
 const key = crypto.randomBytes(24);
@@ -17,14 +17,14 @@ function codificadorBaseHexa(nomArxiu) {
         } else {
             console.log(resolvedPath + '\n');
         }
-        readFile(resolvedPath, 'utf-8', (error, content) => {
+        readFile(resolvedPath, 'utf-8', (error, contentA) => {
             if (error) {
                 throw error;
             } else {
-                console.log(content + '\n');
+                console.log(contentA + '\n');
             }
 
-            let b64Encoded = Buffer.from(content).toString('base64');
+            let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
             console.log(b64Encoded + '\n'); 
 
             appendFile(`Codificat_${nomArxiu}.b64`, b64Encoded, error => {
@@ -35,7 +35,7 @@ function codificadorBaseHexa(nomArxiu) {
                 }
             });
 
-            let hexEncoded = Buffer.from(content).toString('hex');
+            let hexEncoded = Buffer.from(contentA, 'utf-8').toString('hex');
             console.log(hexEncoded + '\n'); 
     
             appendFile(`Codificat_${nomArxiu}.hex`, hexEncoded, error => {
@@ -64,15 +64,15 @@ function encripta22(nomArxiuCodificat) {
             console.log(resolvedPath + '\n');
         }
         
-        readFile(resolvedPath, 'utf-8', (error, content) => {
+        readFile(resolvedPath, 'utf-8', (error, contentC) => {
             if (error) {
                 throw error;
             } else {
-                console.log(content + '\n');
+                console.log(contentC + '\n');
             }  
             
             let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-            let textEncriptat = encriptador.update(content);
+            let textEncriptat = encriptador.update(contentC);
 
             appendFile(`Encriptat_${nomArxiuCodificat}`, textEncriptat, (error) => {
                 if(error) {
@@ -107,15 +107,15 @@ function desEncriptador22(nomArxiuEncriptatCodificat) {
             console.log(resolvedPath + '\n');
         }
         
-        readFile(resolvedPath, 'utf-8', (error, content) => {
+        readFile(resolvedPath, 'utf-8', (error, contentD) => {
             if (error) {
                 throw error;
             } else {
-                console.log(content + '\n');
+                console.log(contentD + '\n');
             }  
             
             let desEncriptador = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
-            let textDesEncriptat = desEncriptador.update(content);
+            let textDesEncriptat = desEncriptador.update(contentD);
 
             appendFile(`des${nomArxiuEncriptatCodificat}`, textDesEncriptat, (error) => {
                 if(error) {
@@ -139,14 +139,14 @@ function decodificadorBase (nomArxiuDesencriptatCodificatB64) {
         } else {
             console.log(resolvedPath + '\n');
         }
-        readFile(resolvedPath, 'utf-8', (error, content) => {
+        readFile(resolvedPath, 'utf-8', (error, contentE) => {
             if (error) {
                 throw error;
             } else {
-                console.log(content + ' \n');
+                console.log(contentE + ' \n');
             }
 
-            let b64Decoded = Buffer(content, 'base64').toString('ascii');
+            let b64Decoded = Buffer.from(contentE, 'base64').toString('utf-8');
             console.log(b64Decoded + '\n'); 
 
             appendFile(`deCodificat_${nomArxiuDesencriptatCodificatB64}`, b64Decoded, error => {
@@ -172,14 +172,14 @@ function decodificadorHexa (nomArxiuDesencriptatCodificatHex) {
         } else {
             console.log(resolvedPath + '\n');
         }
-        readFile(resolvedPath, 'utf-8', (error, content) => {
+        readFile(resolvedPath, 'utf-8', (error, contentF) => {
             if (error) {
                 throw error;
             } else {
-                console.log(content + '\n');
+                console.log(contentF + '\n');
             }
 
-            let hexDecoded = Buffer(content, 'hex').toString('ascii');
+            let hexDecoded = Buffer.from(contentF, 'hex').toString('utf-8');
             console.log(hexDecoded + '\n'); 
 
             appendFile(`deCodificat_${nomArxiuDesencriptatCodificatHex}`, hexDecoded, error => {
