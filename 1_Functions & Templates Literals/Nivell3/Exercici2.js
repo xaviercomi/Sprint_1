@@ -1,3 +1,10 @@
-let funcioAnonima = (nomUsuari) => console.log(nomUsuari);
+let user = 'Xavier Comi';
 
-funcioAnonima('Xavier Comí');
+(function () {
+
+    console.log(`El nom d'usuari es: ${user}`);
+
+})(user);
+
+
+
