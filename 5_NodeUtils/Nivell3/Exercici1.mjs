@@ -27,7 +27,7 @@ function codificadorBaseHexa(nomArxiu) {
             let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
             console.log(b64Encoded + '\n'); 
 
-            appendFile(`Codificat_${nomArxiu}.b64`, b64Encoded, error => {
+            appendFile(`Codificat_b64_${nomArxiu}`, b64Encoded, error => {
                 if (error) {
                     throw error;
                 } else {
@@ -38,7 +38,7 @@ function codificadorBaseHexa(nomArxiu) {
             let hexEncoded = Buffer.from(contentA, 'utf-8').toString('hex');
             console.log(hexEncoded + '\n'); 
     
-            appendFile(`Codificat_${nomArxiu}.hex`, hexEncoded, error => {
+            appendFile(`Codificat_hex_${nomArxiu}`, hexEncoded, error => {
                 if (error) {
                     throw error;
                 } else {
@@ -52,8 +52,8 @@ function codificadorBaseHexa(nomArxiu) {
 }
 
 setTimeout( () => {
-    encripta22('Codificat_creaArxiu.txt.b64'), 
-    encripta22('Codificat_creaArxiu.txt.hex')}, 5000);
+    encripta22('Codificat_b64_creaArxiu.txt'), 
+    encripta22('Codificat_hex_creaArxiu.txt')}, 5000);
 
 function encripta22(nomArxiuCodificat) {
 
@@ -95,8 +95,8 @@ function encripta22(nomArxiuCodificat) {
 };
 
 setTimeout( () => {
-    desEncriptador22('Encriptat_Codificat_creaArxiu.txt.b64');
-    desEncriptador22('Encriptat_Codificat_creaArxiu.txt.hex')}, 7000);
+    desEncriptador22('Encriptat_Codificat_b64_creaArxiu.txt');
+    desEncriptador22('Encriptat_Codificat_hex_creaArxiu.txt')}, 7000);
 
 function desEncriptador22(nomArxiuEncriptatCodificat) {
 
@@ -129,7 +129,7 @@ function desEncriptador22(nomArxiuEncriptatCodificat) {
 }
 
 setTimeout( () => { 
-    decodificadorBase('desEncriptat_Codificat_creaArxiu.txt.b64')}, 9000);
+    decodificadorBase('desEncriptat_Codificat_b64_creaArxiu.txt')}, 9000);
 
 function decodificadorBase (nomArxiuDesencriptatCodificatB64) {
 
@@ -162,7 +162,7 @@ function decodificadorBase (nomArxiuDesencriptatCodificatB64) {
 
 
 setTimeout( () => { 
-    decodificadorHexa('desEncriptat_Codificat_creaArxiu.txt.hex')}, 11000);
+    decodificadorHexa('desEncriptat_Codificat_hex_creaArxiu.txt')}, 11000);
 
 function decodificadorHexa (nomArxiuDesencriptatCodificatHex) {
 
