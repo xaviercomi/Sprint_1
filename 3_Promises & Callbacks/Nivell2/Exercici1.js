@@ -14,36 +14,27 @@ let salaries = [{
     salary: 4000
 }, {
     id: 2,
-    salary: 1000
+    salary: 1000    
 }, {
     id: 3,
     salary: 2000
 }];
 
-function cercaEmpleats(id) {
+let getEmpleado = ( (id) => {
+    let empleatTrobat = employees.find(item => item.id === id);
+    return new Promise ( (resolve, reject) => {   
+        if (empleatTrobat) {
+            resolve(empleatTrobat);
+        } else {
+            reject(err = new Error());
+        }    
+    });
+});
 
-    const getEmpleado = (id) => {
-        let usuariTrobat = employees.find(item => item.id == id);
-        return new Promise((resolve, reject) => {
-            if (usuariTrobat) {
-                resolve(usuariTrobat);
-            } else {
-                reject(new Error(`Id:${id} no existeix.`));
-            }
-        });
-    }      
-    getEmpleado(id)
-        .then((usuariTrobat) => {
-            console.log(`Aquesta identificació pertany a: ${usuariTrobat.name}`);
-        })
-        .catch((err) => {
-            console.log(err.message);
-        });
+getEmpleado()
+    .then(  empleatTrobat => console.log(`Aquesta identificació pertany a: ${empleat.name}`) )
+    .catch( (err) => console.log(err.message));
 
-};
+getEmpleado(2);
 
-cercaEmpleats(3);
-cercaEmpleats(2);
-cercaEmpleats(1);
-cercaEmpleats(0);
  

@@ -20,11 +20,12 @@ let salaries = [{
     salary: 2000
 }];
 
-let getSalario = (id) => {
-    let salari = salaries.find(item => item.id == id);
-    console.log(salari.salary);
+let getSalario = (employee) => {
+    let salari = salaries.find(item => item.id == employee.id);
+    console.log(employee);
+    console.log(`Salari de ${employee.name}: ${salari.salary}`);
 }
 
-getSalario(1);
-getSalario(2);
-getSalario(3);
+getSalario(employees[0]);
+getSalario(employees[1]);
+
