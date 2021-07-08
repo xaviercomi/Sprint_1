@@ -1,28 +1,30 @@
-let stockVehiculos = [10];
-
-
 class Vehiculo {
-    constructor(tipo, marca, matricula) {
-        this.tipo = tipo;
+    constructor(marca, matricula) {
+        if(new.target===Vehiculo)
+            throw new Error ('Classe abstracta no puede ser instanciada');
         this.marca = marca;
         this.matricula = matricula;
     }
 }
 
-function creaVehicle(tipo, marca, matricula) {
-     
-    let vehiculo = new Vehiculo(tipo, marca, matricula);
-    stockVehiculos.unshift(vehiculo);
+class Coche extends Vehiculo {
+    constructor(marca, matricula, puertas) {
+        super(marca, matricula)
+        this.puertas = puertas
+    }   
+    getPuertas() {
+        console.log(`Numero de puertas: ${this.puertas}`);
+    }  
+}
+
+function creaCoche(marca, matricula, puertas) {
+
+    let coche = new Coche(marca, matricula, puertas, puertas);
 
 };
 
-creaVehicle('moto', 'Seat','345SFG');
-creaVehicle('triciclo', 'Skoda','567TRY');
-creaVehicle('automovil', 'Volkswagen','789XCV');
-
-
-setTimeout( () => {
-    for ( let i = 0; i < stockVehiculos.length; i++ ) {
-        console.log(stockVehiculos[i]);
-    }
-},2000);
+(() => {
+    let coche = new Coche('Seat','345SFG', 5, 4);
+    console.log(coche);
+    coche.getPuertas();
+})();    
