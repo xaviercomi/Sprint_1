@@ -5,7 +5,7 @@ const saludar = (id, callback) => {
 
 
 function callback (id) {
-    if(id = 0) {
+    if(id == 0) {
         console.log(`Hola! ${id} ets un bot.`);
     } else {
         console.log(`Hola! ${id} ets humà.`);
@@ -13,6 +13,9 @@ function callback (id) {
 };
 
 saludar(0, callback);
+saludar(1, callback);
+
+
 
 
 
