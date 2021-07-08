@@ -17,14 +17,8 @@ class Coche extends Vehiculo {
     }  
 }
 
-function creaCoche(marca, matricula, puertas) {
-
-    let coche = new Coche(marca, matricula, puertas, puertas);
-
-};
-
 (() => {
-    let coche = new Coche('Seat','345SFG', 5, 4);
+    let coche = new Coche('Seat','345SFG', 5);
     console.log(coche);
     coche.getPuertas();
 })();    
