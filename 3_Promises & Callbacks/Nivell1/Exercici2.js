@@ -1,15 +1,18 @@
 
-let salutacio = id => {
-    if(id == 0) {
+const saludar = (id, callback) => {
+    callback(id)
+};
+
+
+function callback (id) {
+    if(id = 0) {
         console.log(`Hola! ${id} ets un bot.`);
     } else {
         console.log(`Hola! ${id} ets humà.`);
     }
 };
 
-function usuari (id, callback) {
-   callback(id);
-};
+saludar(0, callback);
 
-usuari(0, salutacio);
-usuari(1, salutacio);
+
+
