@@ -12,14 +12,17 @@ class Vehiculo {
 function creaVehicle(tipo, marca, matricula) {
      
     let vehiculo = new Vehiculo(tipo, marca, matricula);
-    stockVehiculos.push(vehiculo);
-    console.log(stockVehiculos);
+    stockVehiculos.unshift(vehiculo);
 
-}
+};
 
 creaVehicle('moto', 'Seat','345SFG');
 creaVehicle('triciclo', 'Skoda','567TRY');
 creaVehicle('automovil', 'Volkswagen','789XCV');
 
 
-
+setTimeout( () => {
+    for ( let i = 0; i < stockVehiculos.length; i++ ) {
+        console.log(stockVehiculos[i]);
+    }
+},2000);
