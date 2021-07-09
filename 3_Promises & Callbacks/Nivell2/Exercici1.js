@@ -1,3 +1,5 @@
+
+
 let employees = [{
     id: 1,
     name: 'Linux Torvalds'
@@ -20,21 +22,21 @@ let salaries = [{
     salary: 2000
 }];
 
-let getEmpleado = ( (id) => {
-    let empleatTrobat = employees.find(item => item.id === id);
+const getEmpleado = ( id => {
     return new Promise ( (resolve, reject) => {   
-        if (empleatTrobat) {
-            resolve(empleatTrobat);
+        let employee = employees.find(item => item.id == id);
+        if (employee) {
+            resolve(employee);
         } else {
             reject(err = new Error());
         }    
     });
 });
 
-getEmpleado()
-    .then(  empleatTrobat => console.log(`Aquesta identificació pertany a: ${empleat.name}`) )
-    .catch( (err) => console.log(err.message));
+getEmpleado(1)
+    .then( employee => console.log(`Aquest ID pertany a: ${employee.name}`) )
+    .catch( (err) => console.log(err.message) );
 
-getEmpleado(2);
+
 
  

@@ -1,3 +1,4 @@
+
 let employees = [{
     id: 1,
     name: 'Linux Torvalds'
@@ -14,39 +15,39 @@ let salaries = [{
     salary: 4000
 }, {
     id: 2,
-    salary: 1000
+    salary: 1000    
 }, {
     id: 3,
     salary: 2000
 }];
 
-function cercaEmpleats(id) {
+const getEmpleado = ( id => {
+    return new Promise ( (resolve, reject) => {   
+        let employee = employees.find(item => item.id == id);
+        if (employee) {
+            resolve(employee);
+        } else {
+            reject(err = new Error('No existeix a employees'));
+        }    
+    });
+});
 
-    const getEmpleado = (id) => {
-        let usuariTrobat = employees.find(item => item.id == id);
-        return new Promise((resolve, reject) => {
-            if (usuariTrobat) {
-                resolve(usuariTrobat);
-            } else {
-                reject(new Error(`Id:${id} no existeix.`));
-            }
-        });
-    }      
-    getEmpleado(id)
-        .then((usuariTrobat) => {
-            console.log(`Aquesta identificació pertany a: ${usuariTrobat.name}`);
-        })
-        .then(() => {
-            let salari = salaries.find(item => item.id == id);
-            console.log(`salari: ${salari.salary}`);
-        })
-        .catch((err) => {
-            console.log(err.message);
-        });
-};
+const getSalario = (employee) => {
+    try {
+        let salari = salaries.find(item => item.id == employee.id);
+        if (!salari) {
+            throw "No s'ha trobat empleat amb aquest ID";
+        } else {
+            console.log(`Salari de ${employee.name}: ${salari.salary}`);
+        }
+    } catch (err) {
+        console.log(`Error: ${err}`);
+    }
+}
 
-cercaEmpleats(3);
-cercaEmpleats(2);
-cercaEmpleats(1);
-cercaEmpleats(0);
- 
+getEmpleado(7)
+    .then( employee => {
+        console.log(`ID[${employee.id}] pertany a: ${employee.name}`)
+        return getSalario(employee) 
+    })        
+    .catch( (err) => console.log(`ID no trobat! ${err}`) );
