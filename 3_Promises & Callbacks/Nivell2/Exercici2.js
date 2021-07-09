@@ -21,12 +21,18 @@ let salaries = [{
     salary: 2000
 }];
 
-let getSalario = (employee) => {
-    let salari = salaries.find(item => item.id == employee.id);
-    console.log(employee);
-    console.log(`Salari de ${employee.name}: ${salari.salary}`);
-}
+let getSalario = ( employee => {
+    return new Promise( (resolve, reject) => {
+        let salari = salaries.find(item => item.id == employee.id);
+        if(salari) {
+            resolve(salari);
+        } else {
+            reject(err = new Error('Error: empleat no trobat'));
+        }    
+    });       
+});
 
-getSalario(employees[0]);
-getSalario(employees[1]);
+getSalario(employees[2])
+    .then(salari => console.log(`Usuari ID [${salari.id}] salari: ${salari.salary}`))
+    .catch( (err) => console.log(err));
 
