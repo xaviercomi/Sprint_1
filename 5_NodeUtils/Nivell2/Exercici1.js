@@ -1,17 +1,17 @@
-const fs = require('fs');
 const zlib = require('zlib');
+const fs = require('fs');
 const { exec } = require('child_process');
 
+function compresioArxiu(arxiu) {
+    let arxiuZIP = zlib.createGzip(),
+        leeArxiu = fs.createReadStream(arxiu),
+        escriuArxiu = fs.createWriteStream(arxiu + '.zip');
 
-const ZipFile = () => {
-    let arxiuZip = zlib.createGzip(),
-        read = fs.createReadStream('creaArxiu.txt'),
-        write = fs.createWriteStream('creaArxiu.txt' + '.gz');
-
-    read.pipe(arxiuZip).pipe(write);
+    leeArxiu.pipe(arxiuZIP).pipe(escriuArxiu);
+    console.log('Arxiu ZIP creat');
 }
 
-ZipFile();
+compresioArxiu('creaArxiu.txt');
 
 exec ("tree", (error, stdout, stderr) => {
     if (error) {
