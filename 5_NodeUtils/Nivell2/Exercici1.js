@@ -17,20 +17,6 @@ function compresioArxiu() {
 
 compresioArxiu();
 
-// Llistat per consola de el contingut del directori d'usuari.
-
-exec ("tree", (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
-});
-
 // Funció que descomprimeix un arxiu.
 
 try {
@@ -47,11 +33,24 @@ try {
 };
 
 function decompresorArxiu() {
-    const decompresor = zlib.createUnzip();
+    const decompresor = zlib.createGunzip();
     const llegeixArxiu = fs.createReadStream('creaArxiu.zip');
     const escriuArxiu = fs.createWriteStream('unzip_creaArxiu.txt');
 
     llegeixArxiu.pipe(decompresor).pipe(escriuArxiu);
-
     console.log(`Arxiu unzip creat!\n`);
 };
+
+// Llistat per consola de el contingut del directori d'usuari.
+
+exec ("tree", (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+});
