@@ -1,17 +1,21 @@
+// Funció que comprimeix un arxiu.
+
 const zlib = require('zlib');
 const fs = require('fs');
 const { exec } = require('child_process');
 
 function compresioArxiu(arxiu) {
     let arxiuZIP = zlib.createGzip(),
-        leeArxiu = fs.createReadStream(arxiu),
-        escriuArxiu = fs.createWriteStream(arxiu + '.zip');
+    llegeixArxiu = fs.createReadStream(arxiu),
+    escriuArxiu = fs.createWriteStream(arxiu + '.zip');
 
-    leeArxiu.pipe(arxiuZIP).pipe(escriuArxiu);
-    console.log('Arxiu ZIP creat');
+    llegeixArxiu.pipe(arxiuZIP).pipe(escriuArxiu);
+    console.log('\nArxiu ZIP creat!\n');
 }
 
 compresioArxiu('creaArxiu.txt');
+
+// Llistat per consola de el contingut del directori d'usuari
 
 exec ("tree", (error, stdout, stderr) => {
     if (error) {
@@ -25,5 +29,6 @@ exec ("tree", (error, stdout, stderr) => {
     console.log(`stdout: ${stdout}`);
 });
 
+// Descomprimir l'arxiu i mostrar contingut per consola. 
 
-
+fs.createReadStream('creaArxiu.txt.zip').pipe(unzip.Extract({path: 'creaArxiu.txt' }));
