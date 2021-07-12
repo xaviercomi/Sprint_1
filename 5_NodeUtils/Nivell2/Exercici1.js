@@ -2,6 +2,7 @@ const zlib = require('zlib');
 const fs = require('fs');
 const { exec } = require('child_process');
 
+const AdmZip = require('adm-zip');
 /* // Funció que comprimeix un arxiu.
 
 function compresioArxiu() {
@@ -44,6 +45,14 @@ function decompresorArxiu() {
     }    
 };
  */
+
+// Crea arxiu comprimit.
+
+const zip = new AdmZip();
+zip.addLocalFile('creaArxiu.txt');
+zip.writeZip('creaArxiu.zip')
+zip.extractAllTo('unzip_creaArxiu.txt');
+
 // Llistat per consola de el contingut del directori d'usuari.
 
 exec ("tree", (error, stdout, stderr) => {
@@ -57,3 +66,4 @@ exec ("tree", (error, stdout, stderr) => {
     }
     console.log(`stdout: ${stdout}`);
 });
+
