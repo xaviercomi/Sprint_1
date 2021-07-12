@@ -1,8 +1,7 @@
 const zlib = require('zlib');
-const fs = require('fs');
-const { exec } = require('child_process');
-
-const AdmZip = require('adm-zip');
+// const fs = require('fs');
+import { exec } from 'child_process';
+import AdmZip from 'adm-zip';
 
 
 /* // Funció que comprimeix un arxiu.

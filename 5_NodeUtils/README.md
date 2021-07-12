@@ -1,0 +1,1 @@
+Fes _npm i_ per instal·lar els mòduls i executa cada arxiu amb _node arxiu.js_
