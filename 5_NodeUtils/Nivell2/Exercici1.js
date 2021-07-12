@@ -1,9 +1,8 @@
-// Funció que comprimeix un arxiu.
-
 const zlib = require('zlib');
 const fs = require('fs');
 const { exec } = require('child_process');
 
+/* // Funció que comprimeix un arxiu.
 
 function compresioArxiu() {
     const compresor = zlib.createGzip();
@@ -33,14 +32,18 @@ try {
 };
 
 function decompresorArxiu() {
-    const decompresor = zlib.createGunzip();
     const llegeixArxiu = fs.createReadStream('creaArxiu.zip');
     const escriuArxiu = fs.createWriteStream('unzip_creaArxiu.txt');
+    const decompresor = zlib.createGunzip();
 
     llegeixArxiu.pipe(decompresor).pipe(escriuArxiu);
-    console.log(`Arxiu unzip creat!\n`);
+    if( fs.existsSync('unzip_creaArxiu.txt') ) {
+        console.log(`Arxiu unzip creat!\n`);
+    } else {
+        console.log('Arxiu NO decomprimit');
+    }    
 };
-
+ */
 // Llistat per consola de el contingut del directori d'usuari.
 
 exec ("tree", (error, stdout, stderr) => {
