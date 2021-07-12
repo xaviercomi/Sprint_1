@@ -1,9 +1,9 @@
 
-const fs = require('fs');
+import { appendFile } from 'fs';
 
 function creaArxiu () {
 
-    fs.appendFile('creaArxiu.txt','El nom de la funció és creaArxiu', (error) => {
+    appendFile('creaArxiu.txt','El nom de la funció és creaArxiu.', (error) => {
 
         if(error) {
             throw error;

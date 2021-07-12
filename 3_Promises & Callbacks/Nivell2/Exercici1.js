@@ -1,3 +1,5 @@
+
+
 let employees = [{
     id: 1,
     name: 'Linux Torvalds'
@@ -14,36 +16,27 @@ let salaries = [{
     salary: 4000
 }, {
     id: 2,
-    salary: 1000
+    salary: 1000    
 }, {
     id: 3,
     salary: 2000
 }];
 
-function cercaEmpleats(id) {
+const getEmpleado = ( id => {
+    return new Promise ( (resolve, reject) => {   
+        let employee = employees.find(item => item.id == id);
+        if (employee) {
+            resolve(employee);
+        } else {
+            reject(err = new Error());
+        }    
+    });
+});
 
-    const getEmpleado = (id) => {
-        let usuariTrobat = employees.find(item => item.id == id);
-        return new Promise((resolve, reject) => {
-            if (usuariTrobat) {
-                resolve(usuariTrobat);
-            } else {
-                reject(new Error(`Id:${id} no existeix.`));
-            }
-        });
-    }      
-    getEmpleado(id)
-        .then((usuariTrobat) => {
-            console.log(`Aquesta identificació pertany a: ${usuariTrobat.name}`);
-        })
-        .catch((err) => {
-            console.log(err.message);
-        });
+getEmpleado(1)
+    .then( employee => console.log(`Aquest ID pertany a: ${employee.name}`) )
+    .catch( (err) => console.log(err.message) );
 
-};
 
-cercaEmpleats(3);
-cercaEmpleats(2);
-cercaEmpleats(1);
-cercaEmpleats(0);
+
  

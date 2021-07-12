@@ -1,1 +1,1 @@
-El nom de la funció és creaArxiu
+El nom de la funció és creaArxiu.

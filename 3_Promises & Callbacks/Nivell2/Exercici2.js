@@ -1,3 +1,4 @@
+
 let employees = [{
     id: 1,
     name: 'Linux Torvalds'
@@ -20,11 +21,18 @@ let salaries = [{
     salary: 2000
 }];
 
-let getSalario = (id) => {
-    let salari = salaries.find(item => item.id == id);
-    console.log(salari.salary);
-}
+let getSalario = ( employee => {
+    return new Promise( (resolve, reject) => {
+        let salari = salaries.find(item => item.id == employee.id);
+        if(salari) {
+            resolve(salari);
+        } else {
+            reject(err = new Error('Error: empleat no trobat'));
+        }    
+    });       
+});
 
-getSalario(1);
-getSalario(2);
-getSalario(3);
+getSalario(employees[2])
+    .then(salari => console.log(`Usuari ID [${salari.id}] salari: ${salari.salary}`))
+    .catch( (err) => console.log(err));
+

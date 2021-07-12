@@ -1,17 +1,47 @@
-const fs = require('fs');
+// Funció que comprimeix un arxiu.
+
 const zlib = require('zlib');
+const fs = require('fs');
 const { exec } = require('child_process');
 
 
-const ZipFile = () => {
-    let arxiuZip = zlib.createGzip(),
-        read = fs.createReadStream('creaArxiu.txt'),
-        write = fs.createWriteStream('creaArxiu.txt' + '.gz');
+function compresioArxiu() {
+    const compresor = zlib.createGzip();
+    const llegeixArxiu = fs.createReadStream('creaArxiu.txt');
+    const escriuArxiu = fs.createWriteStream('creaArxiu.zip');
 
-    read.pipe(arxiuZip).pipe(write);
+    llegeixArxiu.pipe(compresor).pipe(escriuArxiu);
+
+    console.log(`\nArxiu zip creat!\n`);
 }
 
-ZipFile();
+compresioArxiu();
+
+// Funció que descomprimeix un arxiu.
+
+try {
+
+    if ( fs.existsSync('creaArxiu.zip') ) {
+        console.log('Arxiu trobat!\n')
+        decompresorArxiu();
+    } else {
+        console.log('Arxiu no trobat!\n')
+    };
+
+} catch(err) {
+    console.error(err);
+};
+
+function decompresorArxiu() {
+    const decompresor = zlib.createGunzip();
+    const llegeixArxiu = fs.createReadStream('creaArxiu.zip');
+    const escriuArxiu = fs.createWriteStream('unzip_creaArxiu.txt');
+
+    llegeixArxiu.pipe(decompresor).pipe(escriuArxiu);
+    console.log(`Arxiu unzip creat!\n`);
+};
+
+// Llistat per consola de el contingut del directori d'usuari.
 
 exec ("tree", (error, stdout, stderr) => {
     if (error) {
@@ -24,6 +54,3 @@ exec ("tree", (error, stdout, stderr) => {
     }
     console.log(`stdout: ${stdout}`);
 });
-
-
-
