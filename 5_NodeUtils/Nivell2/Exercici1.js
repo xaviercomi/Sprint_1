@@ -3,6 +3,8 @@ const fs = require('fs');
 const { exec } = require('child_process');
 
 const AdmZip = require('adm-zip');
+
+
 /* // Funció que comprimeix un arxiu.
 
 function compresioArxiu() {
@@ -46,12 +48,20 @@ function decompresorArxiu() {
 };
  */
 
-// Crea arxiu comprimit.
+// Funcio que crea arxiu comprimit i el decomprimeix.
 
-const zip = new AdmZip();
-zip.addLocalFile('creaArxiu.txt');
-zip.writeZip('creaArxiu.zip')
-zip.extractAllTo('unzip_creaArxiu.txt');
+const gestionaZip = () => {
+    const zip = new AdmZip();
+    zip.addLocalFile('creaArxiu.txt');
+
+    zip.writeZip('creaArxiu.zip');
+    console.log('Arxiu comprimt!\n');
+    
+    zip.extractAllTo('unzip_creaArxiu.txt');
+    console.log('Arxiu decomprimit!\n');
+}
+
+gestionaZip();
 
 // Llistat per consola de el contingut del directori d'usuari.
 
