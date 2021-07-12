@@ -35,7 +35,7 @@ function stopInterval(){
 
 function creaArxiu () {
 
-    appendFile('creaArxiu.txt','El nom de la funció és creaArxiu.', (error) => {
+    appendFile('5_NodeUtils/creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
 
         if(error) {
             throw error;
@@ -52,19 +52,16 @@ creaArxiu();
 
 function llegeixArxiu() {
 
-    realpath('creaArxiu.txt', (error, resolvedPath) => { 
+    realpath('5_NodeUtils/creaArxiu.txt', (error, resolvedPath) => { 
 
         if (error) {
             throw error;
-        } else {
-        console.log(resolvedPath);
         }
-
         readFile(resolvedPath, 'utf-8', (error, content) => {
                 if (error) {
                     throw error;
                 } else {
-                    console.log(content);
+                    console.log(`Èl contingut de l'arxiu és: ${content}`);
                 }
         });
     });  
