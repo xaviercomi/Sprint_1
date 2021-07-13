@@ -1,58 +1,54 @@
-import { realpath, readFile, appendFile, unlink } from 'fs';
-import crypto from 'crypto';
+const fs = require ('fs');
+const crypto = require ('crypto');
 
 const key = crypto.randomBytes(24);
 const iv = crypto.randomBytes(16);
 
 const algorithm = 'aes-192-cbc';
            
-setTimeout ( () => {
-    codificadorBaseHexa('creaArxiu.txt')}, 2000 ); 
+function codificadorBaseHexa() {
 
-function codificadorBaseHexa(nomArxiu) {
-
-    realpath(nomArxiu, (error, resolvedPath) => {
+    const nomArxiu = 'creaArxiu.txt';
+    fs.readFile('./5_NodeUtils/creaArxiu.txt', 'utf-8', (error, contentA) => {
+        
         if (error) {
             throw error;
         } else {
-            console.log(resolvedPath + '\n');
+            console.log(contentA + '\n');
         }
-        readFile(resolvedPath, 'utf-8', (error, contentA) => {
+
+        let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
+        console.log(b64Encoded + '\n'); 
+
+        fs.appendFile(`./5_NodeUtils/Codificat_b64_${nomArxiu}`, b64Encoded, error => {
             if (error) {
                 throw error;
             } else {
-                console.log(contentA + '\n');
+                console.log('arxiu codificat en base64 creat!')
+            }
+        });
+
+
+        let hexEncoded = Buffer.from(contentA, 'utf-8').toString('hex');
+        console.log(hexEncoded + '\n'); 
+
+        fs.appendFile(`./5_NodeUtils/Codificat_hex_${nomArxiu}`, hexEncoded, error => {
+            if (error) {
+                throw error;
+            } else {
+                console.log('arxiu codificat en hexadecimal creat!')
             }
 
-            let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
-            console.log(b64Encoded + '\n'); 
+        })
 
-            appendFile(`Codificat_b64_${nomArxiu}`, b64Encoded, error => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log('arxiu codificat en base64 creat!')
-                }
-            });
+    });    
 
-            let hexEncoded = Buffer.from(contentA, 'utf-8').toString('hex');
-            console.log(hexEncoded + '\n'); 
-    
-            appendFile(`Codificat_hex_${nomArxiu}`, hexEncoded, error => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log('arxiu codificat en hexadecimal creat!')
-                }
-
-            })
-        });
-    });
-    
 }
 
-setTimeout( () => {
-    encripta22('Codificat_b64_creaArxiu.txt'), 
+codificadorBaseHexa();
+
+
+/*     encripta22('Codificat_b64_creaArxiu.txt'), 
     encripta22('Codificat_hex_creaArxiu.txt')}, 5000);
 
 function encripta22(nomArxiuCodificat) {
@@ -193,4 +189,4 @@ function decodificadorHexa (nomArxiuDesencriptatCodificatHex) {
         });
     });
     
-};
+}; */

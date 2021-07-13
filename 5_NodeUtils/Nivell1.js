@@ -1,5 +1,5 @@
-import { appendFile } from 'fs';
-import { realpath, readFile } from 'fs';
+const fs  = require ('fs');
+
 
 // Exercici1. Funció que imprimeix missatge recursivament.
 
@@ -35,7 +35,7 @@ function stopInterval(){
 
 function creaArxiu() {
 
-    appendFile('./5_NodeUtils/creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
+    fs.appendFile('./5_NodeUtils/creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
 
         if(error) {
             throw error;
@@ -52,19 +52,13 @@ creaArxiu();
 
 function llegeixArxiu() {
 
-    realpath('./5_NodeUtils/creaArxiu.txt', (error, resolvedPath) => { 
-
+    fs.readFile('./5_NodeUtils/creaArxiu.txt', 'utf-8', (error, content) => {
         if (error) {
             throw error;
+        } else {
+            console.log(`Èl contingut de l'arxiu és: ${content}`);
         }
-        readFile(resolvedPath, 'utf-8', (error, content) => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log(`Èl contingut de l'arxiu és: ${content}`);
-                }
-        });
-    });  
+    });     
 
 }
 

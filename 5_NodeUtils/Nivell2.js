@@ -1,13 +1,15 @@
-import { createGzip, createGunzip } from 'zlib';
-import { createReadStream, createWriteStream } from 'fs';
+const zlib = require ('zlib');
+const fs = require ('fs');
+const { exec } = require('child_process');
+
 
 // Funció que comprimeix un arxiu.
 
 function compresioArxiu() {
 
-            const compresor = createGzip();
-            const llegeixArxiu = createReadStream('./5_NodeUtils/creaArxiu.txt');
-            const escriuArxiu = createWriteStream('./5_NodeUtils/creaArxiu.txt.gz');
+            const compresor = zlib.createGzip();
+            const llegeixArxiu = fs.createReadStream('../5_NodeUtils/creaArxiu.txt');
+            const escriuArxiu = fs.createWriteStream('../5_NodeUtils/creaArxiu.txt.gz');
 
             llegeixArxiu.pipe(compresor).pipe(escriuArxiu);
 
@@ -17,27 +19,18 @@ function compresioArxiu() {
 
 compresioArxiu();
 
-// Funció que descomprimeix un arxiu.
+// Funció que llista per consola el contingut del directori d'usuari.
 
-async function decompresioArxiu() {
-    
-    const decompresor = createGunzip();
-    const llegeixArxiu = createReadStream('./5_NodeUtils/creaArxiu.txt.gz');
-    const escriuArxiu = createWriteStream('./5_NodeUtils/unzip_creaArxiu.txt');
-
-    llegeixArxiu.pipe(decompresor).pipe(escriuArxiu);
-
-    console.log(`Arxiu unzip creat!\n`);
-
-};
-
-decompresioArxiu();
-
-
-
-
-
-
-
+exec('ls', {'shell':'powershell.exe'}, (err, stdout, stderr) => {
+    if (err) {
+      console.error(`exec error: ${err}`);
+      return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }  
+    console.log(`Ficheros: ${stdout}`);
+  });
 
 
