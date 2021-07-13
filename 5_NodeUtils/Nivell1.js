@@ -35,7 +35,7 @@ function stopInterval(){
 
 function creaArxiu() {
 
-    fs.appendFile('./5_NodeUtils/creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
+    fs.appendFile('creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
 
         if(error) {
             throw error;
@@ -52,7 +52,7 @@ creaArxiu();
 
 function llegeixArxiu() {
 
-    fs.readFile('./5_NodeUtils/creaArxiu.txt', 'utf-8', (error, content) => {
+    fs.readFile('creaArxiu.txt', 'utf-8', (error, content) => {
         if (error) {
             throw error;
         } else {

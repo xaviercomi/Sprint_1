@@ -7,9 +7,10 @@ const { exec } = require('child_process');
 
 function compresioArxiu() {
 
+
             const compresor = zlib.createGzip();
-            const llegeixArxiu = fs.createReadStream('../5_NodeUtils/creaArxiu.txt');
-            const escriuArxiu = fs.createWriteStream('../5_NodeUtils/creaArxiu.txt.gz');
+            const llegeixArxiu = fs.createReadStream('creaArxiu.txt');
+            const escriuArxiu = fs.createWriteStream('creaArxiu.txt.gz');
 
             llegeixArxiu.pipe(compresor).pipe(escriuArxiu);
 
@@ -21,7 +22,7 @@ compresioArxiu();
 
 // Funció que llista per consola el contingut del directori d'usuari.
 
-exec('ls', {'shell':'powershell.exe'}, (err, stdout, stderr) => {
+exec('ls', (err, stdout, stderr) => {
     if (err) {
       console.error(`exec error: ${err}`);
       return;
