@@ -33,9 +33,9 @@ function stopInterval(){
 
 // Exercici2. Funció que escriu el seu nom a un arxiu. 
 
-function creaArxiu () {
+function creaArxiu() {
 
-    appendFile('5_NodeUtils/creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
+    appendFile('./5_NodeUtils/creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
 
         if(error) {
             throw error;
@@ -52,7 +52,7 @@ creaArxiu();
 
 function llegeixArxiu() {
 
-    realpath('5_NodeUtils/creaArxiu.txt', (error, resolvedPath) => { 
+    realpath('./5_NodeUtils/creaArxiu.txt', (error, resolvedPath) => { 
 
         if (error) {
             throw error;

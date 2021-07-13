@@ -1,4 +1,4 @@
-import { createGzip, createUnzip } from 'zlib';
+import { createGzip, createGunzip } from 'zlib';
 import { createReadStream, createWriteStream } from 'fs';
 
 // Funció que comprimeix un arxiu.
@@ -6,8 +6,8 @@ import { createReadStream, createWriteStream } from 'fs';
 function compresioArxiu() {
 
             const compresor = createGzip();
-            const llegeixArxiu = createReadStream('5_NodeUtils/creaArxiu.txt');
-            const escriuArxiu = createWriteStream('5_NodeUtils/creaArxiu.txt.zip');
+            const llegeixArxiu = createReadStream('./5_NodeUtils/creaArxiu.txt');
+            const escriuArxiu = createWriteStream('./5_NodeUtils/creaArxiu.txt.gz');
 
             llegeixArxiu.pipe(compresor).pipe(escriuArxiu);
 
@@ -17,13 +17,13 @@ function compresioArxiu() {
 
 compresioArxiu();
 
-/* // Funció que descomprimeix un arxiu.
+// Funció que descomprimeix un arxiu.
 
 async function decompresioArxiu() {
     
-    const decompresor = createUnzip();
-    const llegeixArxiu = createReadStream('5_NodeUtils/creaArxiu.txt.zip');
-    const escriuArxiu = createWriteStream('5_NodeUtils/unzip_creaArxiu.txt');
+    const decompresor = createGunzip();
+    const llegeixArxiu = createReadStream('./5_NodeUtils/creaArxiu.txt.gz');
+    const escriuArxiu = createWriteStream('./5_NodeUtils/unzip_creaArxiu.txt');
 
     llegeixArxiu.pipe(decompresor).pipe(escriuArxiu);
 
@@ -31,7 +31,7 @@ async function decompresioArxiu() {
 
 };
 
-decompresioArxiu(); */
+decompresioArxiu();
 
 
 
