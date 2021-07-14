@@ -1,6 +1,6 @@
 const zlib = require ('zlib');
 const fs = require ('fs');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 
 
 // Funció que comprimeix un arxiu.
@@ -22,16 +22,16 @@ compresioArxiu();
 
 // Funció que llista per consola el contingut del directori d'usuari.
 
-exec('ls', (err, stdout, stderr) => {
-    if (err) {
-      console.error(`exec error: ${err}`);
-      return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }  
-    console.log(`Ficheros: ${stdout}`);
-  });
+
+directori = spawn('./');
+
+if ( directori.hasChildNodes() ) {
+      let arxius = [Node.ChildNodes]
+
+     for( let i = 0; i < arxius.length; i++) {
+          console.log(arxius[i]);
+     }
+}
+
 
 

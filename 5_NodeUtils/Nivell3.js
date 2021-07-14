@@ -1,5 +1,6 @@
 const fs = require ('fs');
 const crypto = require ('crypto');
+const { exit } = require('process');
 
 const key = crypto.randomBytes(24);
 const iv = crypto.randomBytes(16);
@@ -12,14 +13,11 @@ codificadorBaseHexa('creaArxiu.txt');
 
 function codificadorBaseHexa(arxiu) {
 
-    fs.readFile(arxiu, 'utf-8', (error, contentA) => {
-        
+    fs.readFile(arxiu, 'utf-8', (error, contentA) => {    
         if (error) {
             throw error;
         }
-
         let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
-        console.log(`\n ${b64Encoded}  \n`); 
 
         fs.appendFile(`Codificat_b64_${arxiu}`, b64Encoded, error => {
             if (error) {
@@ -30,7 +28,6 @@ function codificadorBaseHexa(arxiu) {
         });
 
         let hexEncoded = Buffer.from(contentA, 'utf-8').toString('hex');
-        console.log(hexEncoded + '\n'); 
 
         fs.appendFile(`Codificat_hex_${arxiu}`, hexEncoded, error => {
             if (error) {
@@ -40,11 +37,13 @@ function codificadorBaseHexa(arxiu) {
             }
         });
 
-        const path = `Codificat_hex_${arxiu}`;
-        if ( fs.existsSync(path) ) {
+        if ( fs.existsSync(`Codificat_b64_creaArxiu.txt`) ) {
             encriptaBaseHexa('Codificat_b64_creaArxiu.txt');
+
+        }
+        if (fs.existsSync(`Encriptat_Codificat_b64_creaArxiu.txt`)) {
             encriptaBaseHexa('Codificat_hex_creaArxiu.txt');
-        };
+        }
 
     });   
 
@@ -67,31 +66,39 @@ function encriptaBaseHexa(arxiu) {
             if (error) {
                 throw error;
             } else {
-                console.log('Arxiu encriptat creat!');
+                console.log('\nArxiu encriptat creat!');
             }
             
-            process.stdout.write('Vols eliminar els arxius codificats?: ');
-            process,stdin.on('data', data => { 
+            process.stdout.write('Vols eliminar els arxius codificats? (s/n): ');
+
+            process.stdin.on('data', data => { 
                 entrada = data.toString().trim(); 
 
-            if ( entrada = 's') {
-                fs.unlink(arxiu, error => {
-                    if (error) {
-                        console.log('Arxiu NO eliminat!', error.misssage);
-                        
-                    } else {
-                        console.log('arxiu codificat eliminat');
-                    }
-                });                  
-            } else {
-                process.exit
-            }              
-        });                               
-    });      
+                if ( entrada == 's') {
+                    fs.unlink(arxiu, error => {
+                        if (error) {
+                            console.log('Arxiu NO eliminat!', error.misssage);                        
+                        } else {
+                            console.log('Arxiu codificat eliminat...');  
+                            if ( fs.existsSync('Encriptat_Codificat_hex_creaArxiu.txt') ) {
+                                desEncriptador('Encriptat_Codificat_b64_creaArxiu.txt');        
+                            }   
+                            if ( fs.existsSync('DesEncriptat_Codificat_hex_creaArxiu.txt') )   {
+                                desEncriptador('Encriptat_Codificat_hex_creaArxiu.txt');   
+                            }              
+                        }
+                    });                  
+                } else {
+                    process.exit();
+                }
+            });                 
+        });    
+    });
+
 };  
 
-
-/* function desEncriptadorBaseHexa(arxiu) {
+//Funció que desencripta arxius.
+function desEncriptador(arxiu) {
 
     fs.readFile(arxiu, 'utf-8', (error, contentD) => {
         if (error) {
@@ -104,79 +111,53 @@ function encriptaBaseHexa(arxiu) {
             if(error) {
                throw error;
             } else {
-                console.log('Arxiu desencriptat creat!');
+                console.log('Arxiu desencriptat...');     
+                if ( fs.existsSync(`DesEncriptat_Codificat_hex_creaArxiu.txt`) ) {
+                    decodificadorBase64('DesEncriptat_Codificat_b64_creaArxiu.txt'); 
+                    decodificadorHexa('DesEncriptat_Codificat_hex_creaArxiu.txt');   
+                }                                 
             }           
         });                               
-    });
-              
+    });         
 };
 
-desEncriptadorBaseHexa('Encriptat_Codificat_b64_creaArxiu.txt');
-desEncriptadorBaseHexa('Encriptat_Codificat_hex_creaArxiu.txt');
- */
-/* setTimeout( () => { 
-    decodificadorBase('desEncriptat_Codificat_b64_creaArxiu.txt')}, 9000);
 
-function decodificadorBase (nomArxiuDesencriptatCodificatB64) {
+function decodificadorBase64(arxiu) {
 
-    realpath(nomArxiuDesencriptatCodificatB64, (error, resolvedPath) => {
-        if (error) {
-            throw error;
-        } else {
-            console.log(resolvedPath + '\n');
-        }
-        readFile(resolvedPath, 'utf-8', (error, contentE) => {
+    fs.readFile(arxiu, 'utf-8', (error, contentE) => {
             if (error) {
                 throw error;
-            } else {
-                console.log(contentE + ' \n');
             }
-
             let b64Decoded = Buffer.from(contentE, 'base64').toString('utf-8');
-            console.log(b64Decoded + '\n'); 
 
-            appendFile(`deCodificat_${nomArxiuDesencriptatCodificatB64}`, b64Decoded, error => {
+            fs.appendFile('DesEncriptat_Decodificat_b64_creaArxiu.txt', b64Decoded, error => {
                 if (error) {
                     throw error;
                 } else {
-                    console.log('arxiu base64 decodificat creat!')
+                    console.log('arxiu base64 decodificat...')
                 }
             });
-        });
-    });
-};    
+        });    
+        
+};     
 
 
-setTimeout( () => { 
-    decodificadorHexa('desEncriptat_Codificat_hex_creaArxiu.txt')}, 11000);
+function decodificadorHexa(arxiu) {
 
-function decodificadorHexa (nomArxiuDesencriptatCodificatHex) {
-
-    realpath(nomArxiuDesencriptatCodificatHex, (error, resolvedPath) => {
+    fs.readFile(arxiu, 'utf-8', (error, contentF) => {
         if (error) {
             throw error;
-        } else {
-            console.log(resolvedPath + '\n');
         }
-        readFile(resolvedPath, 'utf-8', (error, contentF) => {
+        let hexDecoded = Buffer.from(contentF, 'hex').toString('utf-8');
+        console.log(hexDecoded + '\n'); 
+
+        fs.appendFile('DesEncriptat_Decodificat_b64_creaArxiu.txt', hexDecoded, error => {
             if (error) {
                 throw error;
             } else {
-                console.log(contentF + '\n');
+                console.log('arxiu hexadecimal decodificat...')
             }
-
-            let hexDecoded = Buffer.from(contentF, 'hex').toString('utf-8');
-            console.log(hexDecoded + '\n'); 
-
-            appendFile(`deCodificat_${nomArxiuDesencriptatCodificatHex}`, hexDecoded, error => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log('arxiu hexadecimal decodificat creat!')
-                }
-
-            });
         });
-    });
+    });     
     
-}; */
+}; 
