@@ -1,64 +1,63 @@
 const fs = require ('fs');
 const crypto = require ('crypto');
-const { exit } = require('process');
+const { Console } = require('console');
 
 const key = crypto.randomBytes(24);
 const iv = crypto.randomBytes(16);
 
 const algorithm = 'aes-192-cbc';
 
-//Funció que codifica el mateix arxiu en base64 i hexadecimal.
+//Funció que codifica un arxiu en base64.
+function codificadorBase64(arxiu) {
 
-codificadorBaseHexa('creaArxiu.txt');
-
-function codificadorBaseHexa(arxiu) {
-
-    fs.readFile(arxiu, 'utf-8', (error, contentA) => {    
-        if (error) {
-            throw error;
-        }
-        let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
-
-        fs.appendFile(`Codificat_b64_${arxiu}`, b64Encoded, error => {
+    return new Promise( (resolve, reject) => {
+        
+        fs.readFile(arxiu, 'utf-8', (error, contentA) => {    
             if (error) {
-                throw error;
-            } else {
-                console.log('arxiu codificat en base64 creat!\n')
+                reject(error);
             }
+            let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
+
+            fs.appendFile(`Codificat_b64_${arxiu}`, b64Encoded, error => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve('Arxiu codificat en base64 creat!');
+                }
+            });
         });
+    });
+};     
 
-        let hexEncoded = Buffer.from(contentA, 'utf-8').toString('hex');
+//Funció que codifica un arxiu en Hexadeximal.
+function codificadorHexadecimal(arxiu) {
 
-        fs.appendFile(`Codificat_hex_${arxiu}`, hexEncoded, error => {
+    return new Promise( (resolve, reject) => {
+        
+        fs.readFile(arxiu, 'utf-8', (error, contentB) => {    
             if (error) {
-                throw error;
-            } else {
-                console.log('arxiu codificat en hexadecimal creat!\n')
+                reject(error);
             }
-        });
+            let hexEncoded = Buffer.from(contentB, 'utf-8').toString('hex');
+            
+            fs.appendFile(`Codificat_hex_${arxiu}`, hexEncoded, error => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve('Arxiu codificat en hexadecimal creat!');
+                }            
+            });
+        });    
+    });       
+};
 
-        if ( fs.existsSync(`Codificat_b64_creaArxiu.txt`) ) {
-            encriptaBaseHexa('Codificat_b64_creaArxiu.txt');
-
-        }
-        if (fs.existsSync(`Encriptat_Codificat_b64_creaArxiu.txt`)) {
-            encriptaBaseHexa('Codificat_hex_creaArxiu.txt');
-        }
-
-    });   
-
-}
-
-//Funció que encripta dos arxius codificats en base64 i hexadecimal.
-function encriptaBaseHexa(arxiu) {
+//Funció que encripta arxius i elimina els codificats.
+function encriptaElimina(arxiu) {
     
     fs.readFile(arxiu, 'utf-8', (error, contentC) => {
         if (error) {
             throw error;
-        } else {
-            console.log(contentC + '\n');
-        }  
-        
+        }
         let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
         let textEncriptat = encriptador.update(contentC);
 
@@ -69,35 +68,46 @@ function encriptaBaseHexa(arxiu) {
                 console.log('\nArxiu encriptat creat!');
             }
             
-            process.stdout.write('Vols eliminar els arxius codificats? (s/n): ');
+            process.stdout.write('Vols eliminar arxiu codificat? (s/n): ');
 
             process.stdin.on('data', data => { 
-                entrada = data.toString().trim(); 
+                entrada = data.toString(); 
 
                 if ( entrada == 's') {
                     fs.unlink(arxiu, error => {
                         if (error) {
                             console.log('Arxiu NO eliminat!', error.misssage);                        
                         } else {
-                            console.log('Arxiu codificat eliminat...');  
-                            if ( fs.existsSync('Encriptat_Codificat_hex_creaArxiu.txt') ) {
-                                desEncriptador('Encriptat_Codificat_b64_creaArxiu.txt');        
-                            }   
-                            if ( fs.existsSync('DesEncriptat_Codificat_hex_creaArxiu.txt') )   {
-                                desEncriptador('Encriptat_Codificat_hex_creaArxiu.txt');   
-                            }              
+                            console.log('Arxiu codificat eliminat...');             
                         }
                     });                  
                 } else {
                     process.exit();
                 }
-            });                 
+            });
         });    
     });
+};
 
-};  
+(async () => {
+    try {
+        const resultatA = await codificadorBase64('creaArxiu.txt');
+        console.log(resultatA);
+        const resultatB = await codificadorHexadecimal('creaArxiu.txt');
+        console.log(resultatB);
+        const resultatC = await encriptaElimina('Codificat_b64_creaArxiu.txt');
+        console.log(resultatC);
+        const resultatD = await encriptaElimina('Codificat_hex_creaArxiu.txt');
+        console.log(resultatD);
+    } catch (error) {
+        //console.log(error.message);     
+    }  
+})();
 
-//Funció que desencripta arxius.
+ 
+  
+
+/* //Funció que desencripta arxius.
 function desEncriptador(arxiu) {
 
     fs.readFile(arxiu, 'utf-8', (error, contentD) => {
@@ -111,11 +121,7 @@ function desEncriptador(arxiu) {
             if(error) {
                throw error;
             } else {
-                console.log('Arxiu desencriptat...');     
-                if ( fs.existsSync(`DesEncriptat_Codificat_hex_creaArxiu.txt`) ) {
-                    decodificadorBase64('DesEncriptat_Codificat_b64_creaArxiu.txt'); 
-                    decodificadorHexa('DesEncriptat_Codificat_hex_creaArxiu.txt');   
-                }                                 
+                console.log('Arxiu desencriptat...');                                     
             }           
         });                               
     });         
@@ -160,4 +166,4 @@ function decodificadorHexa(arxiu) {
         });
     });     
     
-}; 
+};  */ 
