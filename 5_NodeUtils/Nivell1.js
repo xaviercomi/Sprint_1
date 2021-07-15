@@ -35,7 +35,7 @@ function stopInterval(){
 
 function creaArxiu() {
 
-    fs.appendFile('creaArxiu.txt','El nom de la funció és creaArxiu().', (error) => {
+    fs.appendFile('creaArxiu.txt','El nom de la funcio es creaArxiu.', (error) => {
 
         if(error) {
             throw error;

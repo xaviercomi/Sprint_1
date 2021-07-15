@@ -1,6 +1,5 @@
 const fs = require ('fs');
 const crypto = require ('crypto');
-const { Console } = require('console');
 
 const key = crypto.randomBytes(24);
 const iv = crypto.randomBytes(16);
@@ -52,42 +51,119 @@ function codificadorHexadecimal(arxiu) {
 };
 
 //Funció que encripta arxius i elimina els codificats.
-function encriptaElimina(arxiu) {
+function encripta(arxiu) {
     
-    fs.readFile(arxiu, 'utf-8', (error, contentC) => {
-        if (error) {
-            throw error;
-        }
-        let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-        let textEncriptat = encriptador.update(contentC);
+    return new Promise( (resolve, reject) => {
 
-        fs.appendFile(`Encriptat_${arxiu}`, textEncriptat, (error) => {
+        fs.readFile(arxiu, (error, contentC) => {
             if (error) {
                 throw error;
-            } else {
-                console.log('\nArxiu encriptat creat!');
             }
-            
-            process.stdout.write('Vols eliminar arxiu codificat? (s/n): ');
+            let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+            let textEncriptat = encriptador.update(contentC);
 
-            process.stdin.on('data', data => { 
-                entrada = data.toString(); 
-
-                if ( entrada == 's') {
-                    fs.unlink(arxiu, error => {
-                        if (error) {
-                            console.log('Arxiu NO eliminat!', error.misssage);                        
-                        } else {
-                            console.log('Arxiu codificat eliminat...');             
-                        }
-                    });                  
+            fs.appendFile(`Encriptat_${arxiu}`, textEncriptat, (error) => {
+                if (error) {
+                    reject('Arxiu NO encriptat');
                 } else {
-                    process.exit();
+                    resolve('Arxiu encriptat creat!');
                 }
-            });
-        });    
+                
+            });   
+        });
+    });
+};        
+// Funció que elimina arxius.
+function elimina(arxiu) {
+
+    return new Promise ( (resolve, reject) => {
+        
+        process.stdout.write('Vols eliminar arxiu codificat? [0]si [1]no: ');
+        process.stdin.on('data', data => { 
+            resposta = data;
+            if ( resposta == 0) {
+
+                fs.unlink(arxiu, error => {
+                    if (error) {
+                        reject('Arxiu NO eliminat!');                        
+                    } else {
+                        resolve( ('Arxiu codificat eliminat...') );             
+                    }
+                });   
+
+            } else {
+                process.exit()
+            }
+        });   
     });
 };
+
+//Funció que desencripta arxius.
+function desencripta(arxiu) {
+
+    return new Promise ( ( resolve, reject) => {
+
+        fs.readFile(arxiu, (error, contentD) => {
+            if (error) {
+                throw error;
+            }
+            let desEncriptador = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
+            let textDesEncriptat = desEncriptador.update(contentD);
+
+            fs.appendFile(`Des${arxiu}`, textDesEncriptat, (error) => {
+                if(error) {
+                reject(error);
+                } else {
+                    resolve(`Arxiu: ${arxiu} desencriptat...`);                                     
+                }           
+            });                               
+        });  
+    });           
+};
+
+//Funció que decodifica arxius en base64.
+function decodificaBase64(arxiu) {
+
+    return new Promise ( (resolve, reject) => {
+
+        fs.readFile(arxiu, 'utf-8', (error, contentE) => {
+                if (error) {
+                    throw error;
+                }
+                let b64Decoded = Buffer.from(contentE, 'base64').toString();
+
+                fs.appendFile('DesEncriptat_Decodificat_b64_creaArxiu.txt', b64Decoded, error => {
+                    if (error) {
+                        reject('arxiu base64 no decodificat!');
+                    } else {
+                        resolve('arxiu base64 decodificat...')
+                    }
+                });
+        }); 
+    });           
+}; 
+
+//Funció que decodifica arxius en hexadecimal.
+function decodificaHexadecimal(arxiu) {
+
+    return new Promise ( (resolve, reject) => {
+
+        fs.readFile(arxiu, 'utf-8', (error, contentF) => {
+            if (error) {
+                throw error;
+            }
+            let hexDecoded = Buffer.from(contentF, 'hex').toString();
+
+            fs.appendFile('DesEncriptat_Decodificat_hex_creaArxiu.txt', hexDecoded, error => {
+                if (error) {
+                    reject('Arxiu hexadecimal no decodificat!');
+                } else {
+                    resolve('arxiu hexadecimal decodificat...');
+                }
+            });
+        });     
+    });
+}; 
 
 (async () => {
     try {
@@ -95,75 +171,25 @@ function encriptaElimina(arxiu) {
         console.log(resultatA);
         const resultatB = await codificadorHexadecimal('creaArxiu.txt');
         console.log(resultatB);
-        const resultatC = await encriptaElimina('Codificat_b64_creaArxiu.txt');
+        const resultatC = await encripta('Codificat_b64_creaArxiu.txt');
         console.log(resultatC);
-        const resultatD = await encriptaElimina('Codificat_hex_creaArxiu.txt');
+        const resultatD = await encripta('Codificat_hex_creaArxiu.txt');
         console.log(resultatD);
+        const resultatE = await elimina('Codificat_b64_creaArxiu.txt');
+        console.log(resultatE);
+        const resultatF = await elimina('Codificat_hex_creaArxiu.txt');
+        console.log(resultatF);
+        const resultatG = await desencripta('Encriptat_Codificat_b64_creaArxiu.txt');
+        console.log(resultatG);
+        const resultatH = await desencripta('Encriptat_Codificat_hex_creaArxiu.txt');
+        console.log(resultatH);
+        const resultatI = await decodificaBase64('DesEncriptat_Codificat_b64_creaArxiu.txt');
+        console.log(resultatI);
+        const resultatJ = await decodificaHexadecimal('DesEncriptat_Codificat_hex_creaArxiu.txt');
+        console.log(resultatJ);
+        process.exit();
     } catch (error) {
-        //console.log(error.message);     
+        console.log(error.message);     
     }  
 })();
 
- 
-  
-
-/* //Funció que desencripta arxius.
-function desEncriptador(arxiu) {
-
-    fs.readFile(arxiu, 'utf-8', (error, contentD) => {
-        if (error) {
-            throw error;
-        }
-        let desEncriptador = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
-        let textDesEncriptat = desEncriptador.update(contentD);
-
-        fs.appendFile(`Des${arxiu}`, textDesEncriptat, (error) => {
-            if(error) {
-               throw error;
-            } else {
-                console.log('Arxiu desencriptat...');                                     
-            }           
-        });                               
-    });         
-};
-
-
-function decodificadorBase64(arxiu) {
-
-    fs.readFile(arxiu, 'utf-8', (error, contentE) => {
-            if (error) {
-                throw error;
-            }
-            let b64Decoded = Buffer.from(contentE, 'base64').toString('utf-8');
-
-            fs.appendFile('DesEncriptat_Decodificat_b64_creaArxiu.txt', b64Decoded, error => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log('arxiu base64 decodificat...')
-                }
-            });
-        });    
-        
-};     
-
-
-function decodificadorHexa(arxiu) {
-
-    fs.readFile(arxiu, 'utf-8', (error, contentF) => {
-        if (error) {
-            throw error;
-        }
-        let hexDecoded = Buffer.from(contentF, 'hex').toString('utf-8');
-        console.log(hexDecoded + '\n'); 
-
-        fs.appendFile('DesEncriptat_Decodificat_b64_creaArxiu.txt', hexDecoded, error => {
-            if (error) {
-                throw error;
-            } else {
-                console.log('arxiu hexadecimal decodificat...')
-            }
-        });
-    });     
-    
-};  */ 
