@@ -1,6 +1,8 @@
 const zlib = require ('zlib');
 const fs = require ('fs');
-const path = require ('path');
+let path = require ('path');
+const os = require ('os');
+
 
 // Funció que comprimeix un arxiu.
 
@@ -20,13 +22,12 @@ function compresioArxiu() {
 compresioArxiu();
 
 // Funció que llista per consola el contingut del directori d'usuari.
+function llistaDirectoriUsuari() {
 
-function llistaDirectoriUsuari(path) {
-
-
-console.log(path);
-
+    path = os.homedir();
+    const arxius = fs.readdirSync(path);
+    console.log(`La ruta a la carpeta del usuari actual es:\n${path}`);
+    console.log(arxius);
 }
 
-
-llistaDirectoriUsuari(process.cwd());
+llistaDirectoriUsuari();
