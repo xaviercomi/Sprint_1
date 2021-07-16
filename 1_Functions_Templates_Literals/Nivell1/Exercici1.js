@@ -1,4 +1,4 @@
-export const nomUsuari = nom => {
+const nomUsuari = nom => {
     console.log(`Nom usuari: ${nom}`);
 }
 
