@@ -1,6 +1,6 @@
 let user = 'Xavier Comi';
 
-(function () {
+let callUser = (function () {
 
     console.log(`El nom d'usuari es: ${user}`);
 

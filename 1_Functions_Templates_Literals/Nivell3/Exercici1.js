@@ -1,26 +1,22 @@
 let arrayFuncions = [10];
 
-for( let i = 0; i < 6; i++ ) {
+for( let i = 0; i < 10; i++ ) {
+
     arrayFuncions.push(
-        function comptar() {
-            for( let j = 0; j < 10; j++ ) {
-            console.log(j);          
-        };
-    }); 
+
+        ( function () {
+
+            let esp = '';
+            for ( j = 0; j < 10; j++) {
+                 esp += `${j},` + ' ';
+            }
+            return esp;
+        })()
+
+    ); 
 };
 
-for ( let j = 5; j < 10; j++) {
-    arrayFuncions.push(
-        function nom() {
-            console.log('x');
-            console.log('a');
-    });
-};
-
-
-
-
-
-
-
-
+for( k = 0; k < 10; k++ ) {
+     result = arrayFuncions[k];
+     console.log(result);
+}
