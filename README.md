@@ -1,1 +1,1 @@
-Exercicis dels Sprints a ITACADEMY. Itinerari back-end amb Node.js 
+Exercicis dels Sprints a IT ACADEMY. Itinerari back-end amb Node.js 
