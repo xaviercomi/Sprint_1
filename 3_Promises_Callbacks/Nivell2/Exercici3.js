@@ -34,14 +34,23 @@ const getEmpleado = ( id => {
     });
 });
 
-const getSalario = (employee) => {
-    let salari = salaries.find(item => item.id == employee.id);
-    console.log(`Salari de ${employee.name}: ${salari.salary}`);
-}
+let getSalario = ( employee => {
+    return new Promise( (resolve, reject) => {
+        let salari = salaries.find(item => item.id == employee.id);
+        if (salari) {
+            resolve(salari);
+        } else {
+            reject(err = new Error('Error: empleat no trobat'));
+        }    
+    });       
+});
+
 
 getEmpleado(1)
     .then( employee => {
         console.log(`ID[${employee.id}] pertany a: ${employee.name}`)
         return getSalario(employee) 
+    .then( salari => console.log(`Usuari ID[${salari.id}] salari: ${salari.salary}`) ) 
+    .catch( (err) => console.log(err) ) 
     })        
 
