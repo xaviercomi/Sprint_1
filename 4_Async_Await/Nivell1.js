@@ -42,14 +42,6 @@ const getSalario = (employee) => {
     });  
 };
 
-getEmpleado(2)
-    .then( usuari => console.log(`Usuari: ${usuari.name} id: ${usuari.id}`) )
-    .catch( error => console.log(error.message) );
-
-getSalario(employees[0])
-    .then( salari => console.log(`Usuari amb id [${salari.id}] Salari: ${salari.salary}`) )
-    .catch( error => console.log(error) );
-
 // Funció asíncrona
 
 const fetchingEmpleat = async (id) => {

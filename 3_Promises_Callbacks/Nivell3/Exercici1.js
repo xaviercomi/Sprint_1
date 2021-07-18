@@ -17,7 +17,7 @@ let salaries = [{
     id: 2,
     salary: 1000    
 }, {
-    id: 4,
+    id: 3,
     salary: 2000
 }];
 
