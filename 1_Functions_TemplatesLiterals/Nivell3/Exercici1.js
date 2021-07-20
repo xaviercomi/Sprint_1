@@ -1,22 +1,16 @@
-let arrayFuncions = [10];
+let arrayFuncions = [];
 
 for( let i = 0; i < 10; i++ ) {
-
-    arrayFuncions.push(
-
-        ( function () {
-
-            let esp = '';
-            for ( j = 0; j < 10; j++) {
-                 esp += `${j},` + ' ';
-            }
-            return esp;
-        })()
-
-    ); 
+    arrayFuncions.push(comptar);
 };
 
 for( k = 0; k < 10; k++ ) {
-     result = arrayFuncions[k];
-     console.log(result);
+     (arrayFuncions[k]());
+}
+
+function comptar() {
+    for (let i = 0; i < 10; i++) {
+         console.log(i);
+        
+    }
 }

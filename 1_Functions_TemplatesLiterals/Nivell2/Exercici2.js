@@ -1,7 +1,7 @@
 function nomUsuari(nom) {
-   console.log(nom)
+   return (nom);
 }
 
-`El nom de l'usuari és: ${nomUsuari('xavier')}`
+console.log(`El nom de l'usuari és: ${nomUsuari('xavier')}`);
 
 
