@@ -62,5 +62,5 @@ try {
         });  
     
 } catch (error) {
-    console.log(`Funció no trobada ${error.message}`);
+    console.log(`Funció no trobada ${error}`);
 }
