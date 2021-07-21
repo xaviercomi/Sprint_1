@@ -22,36 +22,35 @@ let salaries = [{
 }];
 
 
-try {
-
-    const getEmpleado = ( id => {
+const getEmpleado = ( id => {
         
-        return new Promise ( (resolve, reject) => {  
-            let employee = employees.find(item => item.id == id);
-                if (employee) {
-                    resolve(employee);
-                } else {
-                    reject(err = new Error('empleat no trobat'));
-                }   
-        });
-
-    });
-
-
-    let getSalario = ( employee => {
-
-        return new Promise( (resolve, reject) => {
-            let salari = salaries.find(item => item.id == employee.id);
-            if (salari) {
-                resolve(salari);
+    return new Promise ( (resolve, reject) => {  
+        let employee = employees.find(item => item.id == id);
+            if (employee) {
+                resolve(employee);
             } else {
-                reject(err1 = new Error('salari no trobat'));
-            }    
-        });  
-
+                reject(err = new Error('empleat no trobat'));
+            }   
     });
 
+});
 
+
+let getSalario = ( employee => {
+    
+
+    return new Promise( (resolve, reject) => {
+        let salari = salaries.find(item => item.id == employee.id);
+        if (salari) {
+            resolve(salari);
+        } else {
+            reject(err1 = new Error('salari no trobat'));
+        }    
+    });  
+
+});
+
+try {
     getEmpleado(3)
         .then( employee => {
             console.log(`ID[${employee.id}] pertany a: ${employee.name}`)
@@ -59,8 +58,7 @@ try {
         .then( salari => console.log(`Usuari ID[${salari.id}] salari: ${salari.salary}`) ) 
         .catch( (err) => console.log(err) ) 
         .catch( (err1) => console.log(err1) )
-        });  
-    
+        });
 } catch (error) {
     console.log(`Funció no trobada ${error}`);
 }
