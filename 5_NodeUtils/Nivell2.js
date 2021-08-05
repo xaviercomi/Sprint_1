@@ -1,11 +1,12 @@
-const zlib = require ('zlib');
-const fs = require ('fs');
-let path = require ('path');
-const os = require ('os');
+const zlib = require('zlib');
+const fs = require('fs');
+let path = require('path');
+const { exec } = require('child_process');
+const os = require('os');
+
 
 
 // Funció que comprimeix un arxiu.
-
 function compresioArxiu() {
 
 
@@ -16,7 +17,7 @@ function compresioArxiu() {
             llegeixArxiu.pipe(compresor).pipe(escriuArxiu);
 
             console.log(`\nArxiu .zip creat!\n`);
-            
+
 };    
 
 compresioArxiu();
@@ -24,10 +25,53 @@ compresioArxiu();
 // Funció que llista per consola el contingut del directori d'usuari.
 function llistaDirectoriUsuari() {
 
-    path = os.homedir();
-    const arxius = fs.readdirSync(path);
-    console.log(`La ruta a la carpeta del usuari actual es:\n${path}`);
-    console.log(arxius);
+
+    const sistema = os.type();
+    
+    switch (sistema) {
+        case 'Darwin':
+            exec ('ls', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`${stdout}`);
+            });
+            break;
+        case 'Linux':
+            exec ('ls', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout:\n${stdout}`);
+            });
+            break;
+        case 'Windows':
+            exec ('dir', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout:\n${stdout}`);
+            });
+            break;
+        default:
+            console.log('Sistema operatiu no detectat!');
+    };
+
 }
 
 llistaDirectoriUsuari();
