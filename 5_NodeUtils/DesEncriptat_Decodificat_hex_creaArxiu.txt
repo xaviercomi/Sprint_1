@@ -1,0 +1,1 @@
+El nom de la funcio es creaArxiu.

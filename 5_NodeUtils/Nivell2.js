@@ -3,21 +3,23 @@ const fs = require('fs');
 let path = require('path');
 const { exec } = require('child_process');
 const os = require('os');
-
+const { pipeline } = require('stream');
 
 
 // Funció que comprimeix un arxiu.
 function compresioArxiu() {
-
-
             const compresor = zlib.createGzip();
             const llegeixArxiu = fs.createReadStream('creaArxiu.txt');
             const escriuArxiu = fs.createWriteStream('creaArxiu.txt.gz');
 
-            llegeixArxiu.pipe(compresor).pipe(escriuArxiu);
-
-            console.log(`\nArxiu .zip creat!\n`);
-
+            pipeline(llegeixArxiu, compresor, escriuArxiu, (err) => {
+                if (err) {
+                    console.error('File does not exists!', err);
+                    process.exitCode = 1;
+                } else {
+                    console.log(`\nArxiu.zip creat!\n`);
+                }
+            });
 };    
 
 compresioArxiu();

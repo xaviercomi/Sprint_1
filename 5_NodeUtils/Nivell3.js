@@ -17,7 +17,7 @@ function codificadorBase64(arxiu) {
             }
             let b64Encoded = Buffer.from(contentA, 'utf-8').toString('base64');
 
-            fs.appendFile(`Codificat_b64_${arxiu}`, b64Encoded, error => {
+            fs.writeFile(`Codificat_b64_${arxiu}`, b64Encoded, error => {
                 if (error) {
                     reject(error)
                 } else {
@@ -39,7 +39,7 @@ function codificadorHexadecimal(arxiu) {
             }
             let hexEncoded = Buffer.from(contentB, 'utf-8').toString('hex');
             
-            fs.appendFile(`Codificat_hex_${arxiu}`, hexEncoded, error => {
+            fs.writeFile(`Codificat_hex_${arxiu}`, hexEncoded, error => {
                 if (error) {
                     reject(error);
                 } else {
@@ -59,10 +59,11 @@ function encripta(arxiu) {
             if (error) {
                 throw error;
             }
-            let encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+            const encriptador = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
             let textEncriptat = encriptador.update(contentC);
+            textEncriptat  = Buffer.concat([textEncriptat, encriptador.final()]);
 
-            fs.appendFile(`Encriptat_${arxiu}`, textEncriptat, (error) => {
+            fs.writeFile(`Encriptat_${arxiu}`, textEncriptat, (error) => {
                 if (error) {
                     reject('Arxiu NO encriptat');
                 } else {
@@ -109,8 +110,8 @@ function desencripta(arxiu) {
             }
             let desEncriptador = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
             let textDesEncriptat = desEncriptador.update(contentD);
-
-            fs.appendFile(`Des${arxiu}`, textDesEncriptat, (error) => {
+            textDesEncriptat = Buffer.concat([textDesEncriptat, desEncriptador.final()]);
+            fs.writeFile(`Des${arxiu}`, textDesEncriptat, (error) => {
                 if(error) {
                 reject(error);
                 } else {
@@ -132,7 +133,7 @@ function decodificaBase64(arxiu) {
                 }
                 let b64Decoded = Buffer.from(contentE, 'base64').toString();
 
-                fs.appendFile('DesEncriptat_Decodificat_b64_creaArxiu.txt', b64Decoded, error => {
+                fs.writeFile('DesEncriptat_Decodificat_b64_creaArxiu.txt', b64Decoded, error => {
                     if (error) {
                         reject('arxiu base64 no decodificat!');
                     } else {
@@ -154,7 +155,7 @@ function decodificaHexadecimal(arxiu) {
             }
             let hexDecoded = Buffer.from(contentF, 'hex').toString();
 
-            fs.appendFile('DesEncriptat_Decodificat_hex_creaArxiu.txt', hexDecoded, error => {
+            fs.writeFile('DesEncriptat_Decodificat_hex_creaArxiu.txt', hexDecoded, error => {
                 if (error) {
                     reject('Arxiu hexadecimal no decodificat!');
                 } else {
