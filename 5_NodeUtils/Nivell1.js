@@ -1,6 +1,5 @@
 const fs  = require ('fs');
 
-
 // Exercici1. Funció que imprimeix missatge recursivament.
 
 let interval = setInterval(missatgeDemora, 1000);
@@ -35,7 +34,7 @@ function stopInterval(){
 
 function creaArxiu() {
 
-    fs.appendFile('creaArxiu.txt','El nom de la funcio es creaArxiu.', (error) => {
+    fs.writeFile('creaArxiu.txt','El nom de la funcio es creaArxiu.', (error) => {
 
         if(error) {
             throw error;
@@ -56,7 +55,7 @@ function llegeixArxiu() {
         if (error) {
             throw error;
         } else {
-            console.log(`Èl contingut de l'arxiu és: ${content}`);
+            console.log(`Èl contingut de l'arxiu és: <<${content}>>`);
         }
     });     
 

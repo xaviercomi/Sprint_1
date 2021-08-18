@@ -1,4 +1,4 @@
-function promesas(x,  y) {
+function promesas(x, y) {
     const promise = new Promise((resolve, reject) => {
         let sum = (x + y);
         if( sum == 2) {

@@ -58,4 +58,4 @@ getEmpleado(3)
             .catch((err) => console.log("ERROR SALARIO: " + err));
 
     })
-    .catch((err1) => console.log("ERROR EMPOLEADO: " + err1));
+    .catch((err1) => console.log("ERROR EMPLEADO: " + err1));
