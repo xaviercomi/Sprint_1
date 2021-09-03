@@ -57,7 +57,7 @@ function llistaDirectoriUsuari() {
                 console.log(`stdout:\n${stdout}`);
             });
             break;
-        case 'Windows':
+        case 'Windows_NT':
             exec ('dir', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`error: ${error.message}`);
