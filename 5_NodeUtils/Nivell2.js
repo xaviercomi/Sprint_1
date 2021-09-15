@@ -17,7 +17,7 @@ function compresioArxiu() {
                     console.error('File does not exists!', err);
                     process.exitCode = 1;
                 } else {
-                    console.log(`\nArxiu.zip creat!\n`);
+                    console.log('\n✅ Arxiu.zip creat!\n');
                 }
             });
 };    
