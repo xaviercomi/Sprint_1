@@ -58,7 +58,7 @@ function llistaDirectoriUsuari() {
             });
             break;
         case 'Windows_NT':
-            exec ('dir #', (error, stdout, stderr) => {
+            exec ('dir %userprofile%', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`error: ${error.message}`);
                     return;
