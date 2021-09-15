@@ -32,7 +32,7 @@ function llistaDirectoriUsuari() {
     
     switch (sistema) {
         case 'Darwin':
-            exec ('ls', (error, stdout, stderr) => {
+            exec ('ls ~', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`error: ${error.message}`);
                     return;
@@ -45,7 +45,7 @@ function llistaDirectoriUsuari() {
             });
             break;
         case 'Linux':
-            exec ('ls', (error, stdout, stderr) => {
+            exec ('ls ~', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`error: ${error.message}`);
                     return;
@@ -58,7 +58,7 @@ function llistaDirectoriUsuari() {
             });
             break;
         case 'Windows_NT':
-            exec ('dir', (error, stdout, stderr) => {
+            exec ('dir #', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`error: ${error.message}`);
                     return;
